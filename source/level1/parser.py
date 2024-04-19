@@ -15,4 +15,3 @@ def write(name, res: List[List[int]]):
         f.write(" ".join([str(x) for x in lin]) + "\n")
     f.close()
 
-write("hallo.txt", [[1,2,3], [2,3,4]])

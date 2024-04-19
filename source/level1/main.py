@@ -1,5 +1,4 @@
 from typing import List
-import numpy as np
 
 from parser import parse, write
 
@@ -41,12 +40,33 @@ def calc_coords(path: str):
     return coords
 
 def calc_smallest_rect(coords):
-    coords_array = np.array(coords)
-    maximum = np.max(coords,axis=0)
-    maximum = np.max(coords,axis=0)
+    min_x = min([a for (a,_) in coords])
+    min_y = min([b for (_,b) in coords])
+    max_x = max([a for (a,_) in coords])
+    max_y = max([b for (_,b) in coords])
 
+    return (max_x - min_x + 1, max_y - min_y + 1)
+
+
+def get_rect(N, paths: List[str]):
+    result = []
+    for path in paths:
+        smallest_rect = calc_smallest_rect(calc_coords(path))
+        result.append(smallest_rect)
+    return result
+
+
+def check_valid_path(lawn_dims, tree_coords, path):
+    coords = calc_coords(path)
+    smallest_rect = calc_smallest_rect(coords)
+
+
+# for i in [1,2,3,4,5]:
+#     N, paths = parse(f"resource/level1/level1_{i}.in")
+#     res = count_directions(N, paths)
+#     write(f"resource/level1/level1_{i}.out", res)
 
 for i in [1,2,3,4,5]:
-    N, paths = parse(f"resource/level1/level1_{i}.in")
-    res = count_directions(N, paths)
-    write(f"resource/level1/level1_{i}.out", res)
+    N, paths = parse(f"resource/level2/level2_{i}.in")
+    res = get_rect(N, paths)
+    write(f"resource/level2/level2_{i}.out", res)
